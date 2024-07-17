@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Assignment Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .subject-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .subject {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .chapter {
+            margin: 10px 0;
+        }
+
+        .chapter label {
+            font-size: 1.2em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+
+        .status label {
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .totals {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .totals-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .totals-subject {
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        .totals-subject h3 {
+            margin-bottom: 10px;
+        }
+
+        .totals-subject ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .totals-subject li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Assignment Schedule</h1>
+    <div class="subject-container">
+        <div class="subject">
+            <h2>SST</h2>
+            <div id="sst-chapters"></div>
+            <button onclick="saveScreenshot('sst')">Save SST</button>
+        </div>
+
+        <div class="subject">
+            <h2>Science</h2>
+            <div id="science-chapters"></div>
+            <button onclick="saveScreenshot('science')">Save Science</button>
+        </div>
+
+        <div class="subject">
+            <h2>Hindi</h2>
+            <div id="hindi-chapters"></div>
+            <button onclick="saveScreenshot('hindi')">Save Hindi</button>
+        </div>
+
+        <div class="subject">
+            <h2>Sanskrit</h2>
+            <div id="sanskrit-chapters"></div>
+            <button onclick="saveScreenshot('sanskrit')">Save Sanskrit</button>
+        </div>
+
+        <div class="subject">
+            <h2>Math</h2>
+            <div id="math-chapters"></div>
+            <button onclick="saveScreenshot('math')">Save Math</button>
+        </div>
+
+        <div class="subject">
+            <h2>Computer</h2>
+            <div id="computer-chapters"></div>
+            <button onclick="saveScreenshot('computer')">Save Computer</button>
+        </div>
+    </div>
+
+    <div class="totals-container">
+        <div class="totals-subject" id="totals-sst">
+            <h3>SST Totals</h3>
+            <ul>
+                <li>To Be Taught: <span id="sst-to-be-taught">0</span></li>
+                <li>Taught: <span id="sst-taught">0</span></li>
+                <li>To Do Assignment: <span id="sst-to-do">0</span></li>
+                <li>Assignment Complete: <span id="sst-complete">0</span></li>
+            </ul>
+        </div>
+        <div class="totals-subject" id="totals-science">
+            <h3>Science Totals</h3>
+            <ul>
+                <li>To Be Taught: <span id="science-to-be-taught">0</span></li>
+                <li>Taught: <span id="science-taught">0</span></li>
+                <li>To Do Assignment: <span id="science-to-do">0</span></li>
+                <li>Assignment Complete: <span id="science-complete">0</span></li>
+            </ul>
+        </div>
+        <div class="totals-subject" id="totals-hindi">
+            <h3>Hindi Totals</h3>
+            <ul>
+                <li>To Be Taught: <span id="hindi-to-be-taught">0</span></li>
+                <li>Taught: <span id="hindi-taught">0</span></li>
+                <li>To Do Assignment: <span id="hindi-to-do">0</span></li>
+                <li>Assignment Complete: <span id="hindi-complete">0</span></li>
+            </ul>
+        </div>
+        <div class="totals-subject" id="totals-sanskrit">
+            <h3>Sanskrit Totals</h3>
+            <ul>
+                <li>To Be Taught: <span id="sanskrit-to-be-taught">0</span></li>
+                <li>Taught: <span id="sanskrit-taught">0</span></li>
+                <li>To Do Assignment: <span id="sanskrit-to-do">0</span></li>
+                <li>Assignment Complete: <span id="sanskrit-complete">0</span></li>
+            </ul>
+        </div>
+        <div class="totals-subject" id="totals-math">
+            <h3>Math Totals</h3>
+            <ul>
+                <li>To Be Taught: <span id="math-to-be-taught">0</span></li>
+                <li>Taught: <span id="math-taught">0</span></li>
+                <li>To Do Assignment: <span id="math-to-do">0</span></li>
+                <li>Assignment Complete: <span id="math-complete">0</span></li>
+            </ul>
+        </div>
+        <div class="totals-subject" id="totals-computer">
+            <h3>Computer Totals</h3>
+            <ul>
+                <li>To Be Taught: <span id="computer-to-be-taught">0</span></li>
+                <li>Taught: <span id="computer-taught">0</span></li>
+                <li>To Do Assignment: <span id="computer-to-do">0</span></li>
+                <li>Assignment Complete: <span id="computer-complete">0</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="totals" id="overall-total">Overall Total: 0</div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        const statuses = ['To Be Taught', 'Taught', 'To Do Assignment', 'Assignment Complete'];
+
+        // Initialize totals
+        const subjectTotals = {
+            'sst': { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 },
+            'science': { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 },
+            'hindi': { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 },
+            'sanskrit': { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 },
+            'math': { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 },
+            'computer': { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 }
+        };
+
+        // Initialize chapters based on given requirements
+        const initialChapters = {
+            'sst': [
+                { subject: 'Geo', start: 1, end: 8 },
+                { subject: 'History', start: 9, end: 17 },
+                { subject: 'Civics', start: 18, end: 23 }
+            ],
+            'science': { start: 1, end: 17 },
+            'hindi': { start: 1, end: 20 },
+            'sanskrit': { start: 1, end: 10 },
+            'math': { start: 1, end: 14 },
+            'computer': { start: 1, end: 8 }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            Object.keys(initialChapters).forEach(subject => {
+                if (Array.isArray(initialChapters[subject])) {
+                    initialChapters[subject].forEach(range => {
+                        for (let i = range.start; i <= range.end; i++) {
+                            addChapter(subject, range.subject, i);
+                        }
+                    });
+                } else {
+                    for (let i = initialChapters[subject].start; i <= initialChapters[subject].end; i++) {
+                        addChapter(subject, null, i);
+                    }
+                }
+            });
+        });
+
+        function addChapter(subject, chapterType, chapterNumber) {
+            const subjectDiv = document.getElementById(`${subject}-chapters`);
+            const chapterDiv = document.createElement('div');
+            chapterDiv.className = 'chapter';
+
+            const chapterLabel = document.createElement('label');
+            chapterLabel.textContent = chapterType ? `${chapterType} Chapter ${chapterNumber}` : `Chapter ${chapterNumber}`;
+            chapterDiv.appendChild(chapterLabel);
+
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'status';
+
+            statuses.forEach(status => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = status;
+                checkbox.id = `${subject}-chapter-${chapterNumber}-${status}`;
+                checkbox.onclick = () => handleStatusChange(checkbox, subject, chapterNumber);
+
+                const checkboxLabel = document.createElement('label');
+                checkboxLabel.htmlFor = checkbox.id;
+                checkboxLabel.textContent = status;
+
+                if (status !== 'To Be Taught' && status !== 'Taught') {
+                    checkbox.disabled = true;
+                }
+
+                checkboxLabel.insertBefore(checkbox, checkboxLabel.firstChild);
+                statusDiv.appendChild(checkboxLabel);
+            });
+
+            chapterDiv.appendChild(statusDiv);
+            subjectDiv.appendChild(chapterDiv);
+
+            // Update subject total
+            subjectTotals[subject]['To Be Taught'] += 1;
+            updateTotals();
+        }
+
+        function handleStatusChange(checkbox, subject, chapterNumber) {
+            const checkedStatuses = getStatuses(subject, chapterNumber);
+
+            const taughtCheckbox = document.getElementById(`${subject}-chapter-${chapterNumber}-Taught`);
+            const toDoCheckbox = document.getElementById(`${subject}-chapter-${chapterNumber}-To Do Assignment`);
+            const completeCheckbox = document.getElementById(`${subject}-chapter-${chapterNumber}-Assignment Complete`);
+
+            if (checkbox.value === 'Taught') {
+                toDoCheckbox.disabled = !checkbox.checked;
+                completeCheckbox.disabled = !checkbox.checked;
+
+                if (!checkbox.checked) {
+                    toDoCheckbox.checked = false;
+                    completeCheckbox.checked = false;
+                }
+            } else if (checkbox.value === 'To Do Assignment' || checkbox.value === 'Assignment Complete') {
+                if (checkbox.checked) {
+                    if (checkbox.value === 'To Do Assignment') {
+                        completeCheckbox.checked = false;
+                    } else {
+                        toDoCheckbox.checked = false;
+                    }
+                }
+            }
+
+            // Update subject total based on status change
+            updateTotals();
+        }
+
+        function getStatuses(subject, chapterNumber) {
+            const checkboxes = document.querySelectorAll(`input[id^="${subject}-chapter-${chapterNumber}-"]`);
+            const checkedStatuses = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkedStatuses.push(checkbox.value);
+                }
+            });
+            return checkedStatuses;
+        }
+
+        function updateTotals() {
+            // Reset subject totals
+            Object.keys(subjectTotals).forEach(subject => {
+                subjectTotals[subject] = { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 };
+            });
+
+            // Update subject totals
+            Object.keys(subjectTotals).forEach(subject => {
+                const chapters = document.getElementById(`${subject}-chapters`).children;
+                Array.from(chapters).forEach(chapter => {
+                    const chapterLabel = chapter.querySelector('label').textContent;
+                    const chapterNumber = chapterLabel.match(/\d+/)[0];
+                    const checkedStatuses = getStatuses(subject, chapterNumber);
+                    checkedStatuses.forEach(status => {
+                        subjectTotals[subject][status] += 1;
+                    });
+                });
+            });
+
+            // Update totals display
+            Object.keys(subjectTotals).forEach(subject => {
+                document.getElementById(`${subject}-to-be-taught`).textContent = subjectTotals[subject]['To Be Taught'];
+                document.getElementById(`${subject}-taught`).textContent = subjectTotals[subject]['Taught'];
+                document.getElementById(`${subject}-to-do`).textContent = subjectTotals[subject]['To Do Assignment'];
+                document.getElementById(`${subject}-complete`).textContent = subjectTotals[subject]['Assignment Complete'];
+            });
+
+            // Update overall totals
+            const overallTotals = { 'To Be Taught': 0, 'Taught': 0, 'To Do Assignment': 0, 'Assignment Complete': 0 };
+            Object.keys(subjectTotals).forEach(subject => {
+                statuses.forEach(status => {
+                    overallTotals[status] += subjectTotals[subject][status];
+                });
+            });
+
+            // Display overall totals
+            document.getElementById('overall-total').textContent = `Overall Total: To Be Taught: ${overallTotals['To Be Taught']}, Taught: ${overallTotals['Taught']}, To Do Assignment: ${overallTotals['To Do Assignment']}, Assignment Complete: ${overallTotals['Assignment Complete']}`;
+        }
+
+        function saveScreenshot(subject) {
+            const subjectContainer = document.getElementById(`${subject}-chapters`);
+            html2canvas(subjectContainer).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${subject}-assignment-schedule.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+    <footer>
+        <hr>
+        <hr>
+        <h1>By Shivansh Raj
+            <br>
+            A Davian
+        </h1>
+</body>
+
+</html>
